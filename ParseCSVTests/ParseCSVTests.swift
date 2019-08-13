@@ -84,31 +84,34 @@ extension String {
     }
 }
 
+struct CSVTestCase {
+    var name: String
+    var input: String
+    var expected: [[String]]
+}
 
 class ParseCSVTests: XCTestCase {
-    func testLine() {
-        let line = "one,2,,three" as Substring
-        XCTAssertEqual(parse(line: line), ["one", "2", "", "three"])
+    let cases: [CSVTestCase] = [
+        CSVTestCase(name: "line", input: "one,2,,three", expected: [["one", "2", "", "three"]]),
+        CSVTestCase(name: "multipleLines", input: "one,2,,three\nfive,six,\"hello,q\"", expected: [["one", "2", "", "three"], ["five", "six", "hello,q"]]),
+        CSVTestCase(name: "quotes", input: "one,\"qu,ote\",2,,three", expected: [["one", "qu,ote", "2", "", "three"]]),
+        CSVTestCase(name: "multiline", input: "one,2,,three\nfour,five", expected: [["one", "2", "", "three"], ["four","five"]]),
+//        CSVTestCase(name: "crlf", input: "one,2,,three\r\nfour,five", expected: [["one", "2", "", "three"], ["four","five"]])
+        
+    ]
+    
+    func testParse1() {
+        for c in cases {
+            let result = parse(lines: c.input).map { $0.map(String.init) }
+            XCTAssertEqual(result, c.expected, "Case \(c.name) failed")
+        }
     }
     
     func testParseAlt() {
-        let line = "one,2,,three\nfive,six,\"hello,q\""
-        XCTAssertEqual(line.parseAlt(), [["one", "2", "", "three"], ["five", "six", "hello,q"]])
-    }
-    
-    func testLineWithQuotes() {
-        let line = "one,\"qu,ote\",2,,three" as Substring
-        XCTAssertEqual(parse(line: line), ["one", "qu,ote", "2", "", "three"])
-    }
-    
-    func testLines() {
-        let line = "one,2,,three\nfour,five"
-        XCTAssertEqual(parse(lines: line), [["one", "2", "", "three"], ["four","five"]])
-    }
-
-    func testLinesWithCRLF() {
-        let line = "one,2,,three\r\nfour,five"
-        XCTAssertEqual(parse(lines: line), [["one", "2", "", "three"], ["four","five"]])
+        for c in cases {
+            let result = c.input.parseAlt()
+            XCTAssertEqual(result, c.expected, "Case \(c.name) failed")
+        }
     }
     
     func testPerformance() {
