@@ -7,15 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		83DDC3AA1FCD67BA00EE5B8F /* small.txt in Resources */ = {isa = PBXBuildFile; fileRef = 83DDC3A81FCD67BA00EE5B8F /* small.txt */; };
-		83DDC3AB1FCD67BA00EE5B8F /* medium.txt in Resources */ = {isa = PBXBuildFile; fileRef = 83DDC3A91FCD67BA00EE5B8F /* medium.txt */; };
+		835A6F822302FD8F0041AD3E /* stops.txt in Resources */ = {isa = PBXBuildFile; fileRef = 835A6F812302FD8F0041AD3E /* stops.txt */; };
 		83E8652F1FBEE2AC0067F77E /* ParseCSVTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E8652E1FBEE2AC0067F77E /* ParseCSVTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		83356C191FC323E800769537 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
-		83DDC3A81FCD67BA00EE5B8F /* small.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = small.txt; sourceTree = "<group>"; };
-		83DDC3A91FCD67BA00EE5B8F /* medium.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = medium.txt; sourceTree = "<group>"; };
+		835A6F812302FD8F0041AD3E /* stops.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = stops.txt; sourceTree = "<group>"; };
 		83E8652C1FBEE2AC0067F77E /* ParseCSVTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ParseCSVTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		83E8652E1FBEE2AC0067F77E /* ParseCSVTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseCSVTests.swift; sourceTree = "<group>"; };
 		83E865301FBEE2AC0067F77E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -61,8 +59,7 @@
 			isa = PBXGroup;
 			children = (
 				83E8652E1FBEE2AC0067F77E /* ParseCSVTests.swift */,
-				83DDC3A91FCD67BA00EE5B8F /* medium.txt */,
-				83DDC3A81FCD67BA00EE5B8F /* small.txt */,
+				835A6F812302FD8F0041AD3E /* stops.txt */,
 				83E865301FBEE2AC0067F77E /* Info.plist */,
 			);
 			path = ParseCSVTests;
@@ -126,8 +123,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				83DDC3AA1FCD67BA00EE5B8F /* small.txt in Resources */,
-				83DDC3AB1FCD67BA00EE5B8F /* medium.txt in Resources */,
+				835A6F822302FD8F0041AD3E /* stops.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

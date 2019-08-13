@@ -51,10 +51,9 @@ class ParseCSVTests: XCTestCase {
     
     func testPerformance() {
         let bundle = Bundle(for: ParseCSVTests.self)
-        let url = bundle.url(forResource: "small", withExtension: "txt")!
+        let url = bundle.url(forResource: "stops", withExtension: "txt")!
         let data = try! Data(contentsOf: url)
-        let string = String(data: data, encoding: .isoLatin1)! + ""
-
+        let string = String(data: data, encoding: .utf8)! + ""
         measure {
             _ = string.parseAlt()
         }
