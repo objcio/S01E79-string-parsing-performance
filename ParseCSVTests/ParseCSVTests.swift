@@ -1,5 +1,74 @@
 import XCTest
 
+extension Substring.UnicodeScalarView {
+    mutating func remove(when char: UnicodeScalar) {
+        if first == char {
+            removeFirst()
+        }
+    }
+    
+    mutating func remove(expecting char: UnicodeScalar) {
+        assert(first == char)
+        removeFirst()
+    }
+    
+    mutating func remove<R>(while condition: (Unicode.Scalar) -> Bool, do parse: (inout Substring.UnicodeScalarView) -> R) -> [R] {
+        var result: [R] = []
+        while let f = first, condition(f) {
+            result.append(parse(&self))
+        }
+        return result
+    }
+    
+    mutating func remove(while condition: (Unicode.Scalar) -> Bool) -> String.UnicodeScalarView {
+        var result = "".unicodeScalars
+        while let f = first, condition(f) {
+            result.append(removeFirst())
+        }
+        return result
+    }
+    
+    mutating func parseLine() -> [String] {
+        let result = remove(while: { $0 != "\n" }, do: { $0.parseField() })
+        remove(when: "\n")
+        return result
+    }
+    
+    mutating func parseField() -> String {
+        let result: String
+        if let f = first, f == "\"" {
+            result = parseQuotedField()
+        } else {
+            result = parsePlainField()
+        }
+        remove(when: ",")
+        return result
+    }
+    
+    mutating func parsePlainField() -> String {
+        let result = remove(while: { $0 != "," && $0 != "\n" })
+        return String(result)
+    }
+    
+    mutating func parseQuotedField() -> String {
+        remove(expecting: "\"")
+        let result = remove(while: { $0 != "\""} )
+        remove(expecting: "\"")
+        return String(result)
+    }
+}
+
+extension String {
+    func parseCSV() -> [[String]] {
+        var v = self[...].unicodeScalars
+        var result: [[String]] = []
+        while !v.isEmpty {
+            result.append(v.parseLine())
+        }
+        return result
+    }
+}
+
 extension String {
     func parseAlt() -> [[String]] {
         var result: [[String]] = [[]]
@@ -49,13 +118,21 @@ class ParseCSVTests: XCTestCase {
         }
     }
     
+    func testParseCSV() {
+        for c in cases {
+            let result = c.input.parseCSV()
+            XCTAssertEqual(result, c.expected, "Case \(c.name) failed")
+        }
+    }
+    
     func testPerformance() {
         let bundle = Bundle(for: ParseCSVTests.self)
         let url = bundle.url(forResource: "stops", withExtension: "txt")!
         let data = try! Data(contentsOf: url)
         let string = String(data: data, encoding: .utf8)! + ""
         measure {
-            _ = string.parseAlt()
+//            _ = string.parseAlt()
+            _ = string.parseCSV()
         }
     }
 }
